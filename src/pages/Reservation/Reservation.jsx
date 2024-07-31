@@ -17,7 +17,7 @@ export default function Reservation() {
     }, [cars])
 
     const loadData = () => {
-        instance.get('/reservation/get_new_requests')
+        instance.get('/reservation/get_all')
             .then(function (response) {
                 // handle success
                 console.log(response.data);

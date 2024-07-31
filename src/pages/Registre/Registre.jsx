@@ -2,6 +2,9 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import instance from '../../services/axiosOrder';
+import alertSuccess from '../../common/function';
 
 export default function Registre() {
     const [name, setName] = useState('');
@@ -26,16 +29,15 @@ export default function Registre() {
         } else {
             instance.post('/admin/new', {
                 name: name,
-                password: password,     
-                email: eMail,
+                password: password,
                 roles: "admin"
-                
             })
                 .then((res) => {
                     alertSuccess.fire({
                         icon: "success",
                         title: "Registered successfully"
                     });
+
                     setTimeout(() => { navigate('/login') }, 2000);
                     console.log(res);
                 })

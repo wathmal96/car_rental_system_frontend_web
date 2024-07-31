@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import Modal1 from '../Model/Modal1';
 import instance from '../../services/axiosOrder';
 import alertSuccess from '../../common/function';
+import ImageLoader from '../ImageLoader/ImageLoader';
 
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
@@ -70,7 +71,7 @@ export default function Card({ model, price, image, children,id,dataForUpdate,lo
 
             {
                 open &&
-                <Modal1 defaultData={dataForUpdate} open={open} handleClose={() => setOpen(false)} loadData={loadData} tstFn={update} setOpen={setOpen} modelAction={"update"} />
+                <Modal1 defaultData={dataForUpdate} open={open} handleClose={() => setOpen(false)} loadData={loadData} tstFn={update} setOpen={setOpen} modelAction={"update"}><ImageLoader defaultData={dataForUpdate} loadData={loadData}/></Modal1>
             }
 
         </>

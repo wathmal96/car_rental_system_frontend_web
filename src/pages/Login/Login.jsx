@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import instance from '../../services/axiosOrder';
 import alertSuccess from '../../common/function';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 export default function Login() {
@@ -23,7 +24,7 @@ export default function Login() {
                 text: 'Missing Data!',
             });
         } else {
-            axios.post('http://localhost:8080/admin/authenticate', {
+            instance.post('/admin/authenticate', {
                 name: name,
                 password: password,
                 roles:"admin"
@@ -42,7 +43,7 @@ export default function Login() {
                 setTimeout(() => { window.location.reload() }, 2000);
             })
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
                 alertSuccess.fire({
                     icon: 'error',
                     title: 'Sign in fail',

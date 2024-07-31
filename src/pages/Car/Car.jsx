@@ -1,11 +1,13 @@
 import Typography from '@mui/material/Typography';
 import Card from '../../components/Card/Card';
-import { PhotoView,PhotoProvider } from 'react-photo-view';
+import { PhotoView, PhotoProvider } from 'react-photo-view';
 import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useState, useEffect } from 'react';
 import Modal1 from '../../components/Model/Modal1';
 import instance from '../../services/axiosOrder';
+import 'react-photo-view/dist/react-photo-view.css';
+import SImage from '../../assets/sample-test.jpg'
 
 export default function Car() {
 
@@ -13,14 +15,17 @@ export default function Car() {
 
     const [cars, setCars] = useState([])
     useEffect(() => {
+        console.log("render the car page");
         loadData()
     }, [])
 
     useEffect(() => {
         console.log(cars);
+        console.log("update the car state");
     }, [cars])
 
     const loadData = () => {
+        console.log("fuckkkkk");
         instance.get('/car/get_all')
             .then(function (response) {
                 // handle success
@@ -30,6 +35,9 @@ export default function Car() {
             .catch(function (error) {
                 // handle error
                 console.log(error);
+
+                localStorage.removeItem('login')
+                window.location.reload()
             })
     }
 
@@ -64,8 +72,11 @@ export default function Car() {
                             <Card key={index} model={val.model} price={val.price} id={val.id} dataForUpdate={val} loadData={loadData}>
                                 {imagePath ? (
                                     <PhotoProvider>
-                                        <PhotoView src={`http://localhost:8080/assets/${imagePath}`}>
+                                        {/* <PhotoView src={`http://localhost:8080/assets/${imagePath}`}>
                                             <img src={`http://localhost:8080/assets/${imagePath}`} alt={`Image of ${val.model}`} />
+                                        </PhotoView> */}
+                                        <PhotoView src={`http://localhost:8080/assets/${imagePath}`}>
+                                            <img style={{ width: '100%' }} src={`http://localhost:8080/assets/${imagePath}`} alt={`Image of ${val.model}`} />
                                         </PhotoView>
                                     </PhotoProvider>
 
@@ -82,7 +93,7 @@ export default function Car() {
 
 
             {open &&
-                <Modal1 open={open} handleClose={() => setOpen(false)} setOpen={setOpen} modelAction={"add"} tstFn={saveCar} defaultData={{model:"",brand:"",engineCapacity:"",price:""}} loadData={loadData}/>
+                <Modal1 open={open} handleClose={() => setOpen(false)} setOpen={setOpen} modelAction={"add"} tstFn={saveCar} defaultData={{ model: "", brand: "", engineCapacity: "", price: "" }} loadData={loadData} />
             }
         </>
     )
